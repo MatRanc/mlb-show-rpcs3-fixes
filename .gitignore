@@ -1,0 +1,13 @@
+# Never commit game files or big captures
+*.rdc
+*.rrc
+*.rrc.gz
+*.elf
+*.BIN
+*.self
+*.sprx
+*.gpr
+*.rep/
+*.iso
+*.pkg
+__pycache__/
