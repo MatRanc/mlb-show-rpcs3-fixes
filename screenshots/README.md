@@ -9,6 +9,7 @@
 | `before_replay_fans_on_mound.png` | replay camera: giant fans on and around the mound |
 | `before_replay_no_fans.png` | replay: stretched grey fans, black bars, missing sections |
 | `before_replay_sky_fans.png` | replay: fans in the sky |
+| `before_crown.png` | outfield: a fan sitting on top of the crown scoreboard, empty outfield seats (in-game screenshot) |
 
 `after_*.png` were taken in game with patch v1.1 on, matching the before shots' cameras where possible.
 
@@ -16,4 +17,4 @@
 |---|---|
 | `after_replay_mound.png` | same replay camera as `before_replay_fans_on_mound.png`: mound clear, stands full |
 | `after_behind_third.png` | same angle as `before_better_moundclump.png`: no slabs, full stands |
-| `after_outfield_crown.png` | outfield and Royals crown: outfield seats populated |
+| `after_outfield_crown.png` | same view as `before_crown.png`: nobody on the crown, outfield seats populated |
