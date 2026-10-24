@@ -8,11 +8,11 @@ On RPCS3, *MLB The Show 16* has broken crowds:
 
 This repo has a one-line RPCS3 game patch that fixes this, and a full write-up of how the bug was found.
 
-| Before (replay camera) | Before (behind home plate) |
+| Before | After (patch v1.1) |
 |---|---|
-| ![fans on the mound](screenshots/before_replay_fans_on_mound.png) | ![black bars and smeared crowd](screenshots/before_better_moundclump.png) |
-
-*After screenshots coming soon.*
+| ![fans on the mound](screenshots/before_replay_fans_on_mound.png) | ![full crowd, empty mound](screenshots/after_replay_mound.png) |
+| ![black bars and smeared crowd](screenshots/before_better_moundclump.png) | ![clean stands](screenshots/after_behind_third.png) |
+| | ![outfield crowd](screenshots/after_outfield_crown.png) |
 
 **The short version:**
 - The game is fine. The bug is in how RPCS3 replays the crowd's draw calls: two separate bugs in `rsx::draw_clause`, both explained in the [write-up](writeup/crowd-fix.md).
@@ -58,4 +58,4 @@ The whole investigation was done with Claude Code driving Ghidra and RenderDoc t
 
 ## License
 
-MIT for the scripts and docs. MLB The Show is © Sony Interactive Entertainment. This repo contains no game code or assets beyond short, explanatory excerpts.
+Apache License 2.0 for the scripts and docs (see [LICENSE](LICENSE)). MLB The Show is © Sony Interactive Entertainment. This repo contains no game code or assets beyond short, explanatory excerpts.
