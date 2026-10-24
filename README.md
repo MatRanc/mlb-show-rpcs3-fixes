@@ -50,7 +50,7 @@ You need RPCS3, your own dump of the game, and the v01.10 update. Nothing in thi
 
 - Crowd: **fixed** with patch v1.1, tested in game at Kauffman Stadium (gameplay, batting view, replays).
 - Still open: a handful of small crowd batches that may still misbehave in rare shots (see the write-up), the post-game freeze, and black flashes on some camera pans.
-- Upstream: I reported both RPCS3 bugs (see the write-up for the issue link). A fix inside RPCS3 would cover every MLB title that draws crowds this way, without per-game patches.
+- Upstream: a proposed fix for both RPCS3 bugs is on [my RPCS3 fork](https://github.com/MatRanc/rpcs3/commits/fix-mlb-crowd-draw-clause) (not built or tested, not a PR). A fix inside RPCS3 would cover every MLB title that draws crowds this way, without per-game patches.
 
 ## Fun fact
 

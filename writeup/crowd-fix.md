@@ -171,7 +171,7 @@ Tested in game: the crowd renders correctly in gameplay, from the batting view a
 ## 11. What's left
 
 - **A possible third issue.** In one capture (`replay_sky_fans`), 10 small batches of 6–16 fans (0.5% of the crowd) read floats as colors. Their color offset points just before a crowd object's header block. That's a different pattern, not explained yet. It may be what's left of the "fans in the sky" in rare shots.
-- **Upstream.** Bug 1 has a two-line fix candidate in `insert_draw_command()`: keep execution barriers on the range they were attached to, and move only primitive-restart barriers. Bug 2 needs the clause to split, or to record the draw type per range, when the type changes inside BEGIN/END. Both are reported to RPCS3, and they're probably behind [issue #14731](https://github.com/RPCS3/rpcs3/issues/14731) ("MLB The Show 16 artifacting").
+- **Upstream.** Bug 1 has a two-line fix candidate in `insert_draw_command()`: keep execution barriers on the range they were attached to, and move only primitive-restart barriers. Bug 2 needs the clause to split, or to record the draw type per range, when the type changes inside BEGIN/END. Both fixes are written up as a commit on [MatRanc/rpcs3 `fix-mlb-crowd-draw-clause`](https://github.com/MatRanc/rpcs3/commits/fix-mlb-crowd-draw-clause). It's not built or tested; it's a starting point for RPCS3 developers, not a PR. These bugs are probably behind [issue #14731](https://github.com/RPCS3/rpcs3/issues/14731) ("MLB The Show 16 artifacting").
 - **Other MLB years.** MLB 11–15 likely share this crowd code. The same fingerprint search (the three attribute formats) should find it at different addresses.
 
 ## Dead ends worth knowing about
