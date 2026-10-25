@@ -48,4 +48,7 @@ Follow `docs/workflow.md`. Key rules learned the hard way:
 - A few small crowd batches in rare replay shots read floats as colors: color offset just before a crowd object's header. See the writeup, §11.
 - A post-game freeze.
 - Black flashes on some camera pans.
+- A mid-game RPCS3 crash, seen once (Oct 25, 2026, online game, accuracy settings on): the RSX thread hit a fatal "Verification failed" in
+  `rsx::expected<rsx::surface_color_format>` (the game set a surface color format RPCS3 doesn't know, value 0), right after a
+  FIFO `call` to 0x0549fa0. The emulation froze; the log is kept locally, not in this repo.
 - Porting the crowd patch to MLB 11–15 and other regions.
