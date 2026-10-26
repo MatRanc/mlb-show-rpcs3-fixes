@@ -76,8 +76,13 @@ The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server)
 ## Status
 
 - Crowd: **fixed** with patch v1.1, tested in game at Kauffman Stadium (gameplay, batting view, replays).
-- Still open: a handful of small crowd batches that may still misbehave in rare shots (see the write-up), the post-game freeze, black flashes on some camera pans, and one mid-game RPCS3 crash (`rsx::surface_color_format` verification failed, seen once in an online game).
+- Still open: a handful of small crowd batches that may still misbehave in rare shots, and a crowd flicker seen once that a new game (new crowd layout) cleared (see the write-up), the post-game freeze, black flashes on some camera pans, and one mid-game RPCS3 crash (`rsx::surface_color_format` verification failed, seen once in an online game).
 - Upstream: a proposed fix for both RPCS3 bugs is on [my RPCS3 fork](https://github.com/MatRanc/rpcs3/commits/fix-mlb-crowd-draw-clause) (not built or tested, not a PR). A fix inside RPCS3 would cover every MLB title that draws crowds this way, without per-game patches.
+
+## Related
+
+- **Pin-holes in player faces with resolution scaling** are a different bug with the same method: RenderDoc showed gaps in the head meshes, and Ghidra plus an SPU disassembly traced them to the game's ICE mesh code culling triangles too small for 720p. The fix ships with the [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server); the write-up is [docs/ice-mesh.md](https://github.com/MatRanc/mlb16-revival-server/blob/main/docs/ice-mesh.md).
+- The revival server's [better depth of field](https://github.com/MatRanc/mlb16-revival-server/blob/main/TECHNICAL.md#the-patches) patch rewrites the game's close-up blur shader.
 
 ## Fun fact
 
