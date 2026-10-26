@@ -24,9 +24,10 @@ This repo has a one-line RPCS3 game patch that fixes this, and a full write-up o
 - **RPCS3**: [rpcs3.net](https://rpcs3.net/download).
 - **PS3 system firmware**: download `PS3UPDAT.PUP` straight from Sony's [PS3 system software page](https://www.playstation.com/en-us/support/hardware/ps3/system-software/), then install it with **File → Install Firmware**.
 - **Your own copy of the game**, legally obtained:
-  - **Disc (BCUS01089):** RPCS3 needs a *decrypted* dump.
-    - Dumping the disc on your own PS3 (e.g. with multiMAN or ManaGunZ) gives you a decrypted folder or ISO directly.
-    - A raw 1:1 disc image is encrypted. Decrypt it first with your disc's key (e.g. with PS3Dec).
+  - **Disc (BCUS01089):** any of these works.
+    - A **decrypted ISO** (recommended): add it with **File → Add ISO Games**.
+    - A raw 1:1 disc image with your disc's key next to it (same name, ending in `.dkey`): RPCS3 decrypts it as it reads (builds from April 2026 on). Also File → Add ISO Games.
+    - A folder dump made on your own PS3 (e.g. with multiMAN or ManaGunZ): add it with File → Add Games.
   - **Digital (NPUA81353):** you need your own license files from your PSN account.
 - **The v01.10 game update**: download it straight from Sony's update servers, then install it with **File → Install Packages/Raps/Edats**:
   - Disc version (BCUS01089): [UP9000-BCUS01089_00-MLB16THESHOWBDPA-A0110-V0100-PE.pkg](http://b0.ww.np.dl.playstation.net/tppkg/np/BCUS01089/BCUS01089_T10/07a5f28c76691db4/UP9000-BCUS01089_00-MLB16THESHOWBDPA-A0110-V0100-PE.pkg)
@@ -55,7 +56,7 @@ Found while testing online play (Oct 2026, RPCS3 v0.0.43-20394/20397, Windows, L
 |---|---|
 | **Write Color Buffers** on | Fixes the dark crowd sections and the black background in picture-in-picture windows (like the runner's lead-off). This is the one that matters. |
 | Strict Rendering Mode | Not needed for the above. Costs performance (an M1 Mac ran about 35 FPS in a match with it on), and blocks Resolution Scale. Keep it off. |
-| Resolution Scale 150–200% | Sharper picture (needs Strict Rendering off). Side effect: thin see-through seams between some surfaces, like the outfield wall and the field. Fewer at 150%. |
+| Resolution Scale above 100% | Sharper picture (needs Strict Rendering off). Side effects: thin see-through seams between some surfaces, like the outfield wall and the field (fewer at 150%), and pin-holes in player faces, which the revival server's face patch fixes (see [Related](#related)). |
 | Default Resolution | Keep *720p*. *1440×1080* is not 1440p: it's a stretched PS3 output mode, and the game still renders at 720p. |
 | SPU Block Size *Mega* + Accurate SPU Reservations off | Two online matches froze on the player using them (Windows, i5-12600KF, also at 1440×1080 + 200% scale): one silent hang, and one RPCS3 fatal error ("vm::writer_lock is being used without cpu_flag::wait…") inside `cellSpursRemoveWorkload`. The other player ran the same settings for 42 minutes without trouble, so it's not every time. Keep the defaults (*Safe*, on). |
 
@@ -75,7 +76,7 @@ The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server)
 
 ## Status
 
-- Crowd: **fixed** with patch v1.1, tested in game at Kauffman Stadium (gameplay, batting view, replays).
+- Crowd: **fixed** with patch v1.1, first tested at Kauffman Stadium (gameplay, batting view, replays), since then at other parks and in online matches.
 - Still open: a handful of small crowd batches that may still misbehave in rare shots, and a crowd flicker seen once that a new game (new crowd layout) cleared (see the write-up), the post-game freeze, black flashes on some camera pans, and one mid-game RPCS3 crash (`rsx::surface_color_format` verification failed, seen once in an online game).
 - Upstream: a proposed fix for both RPCS3 bugs is on [my RPCS3 fork](https://github.com/MatRanc/rpcs3/commits/fix-mlb-crowd-draw-clause) (not built or tested, not a PR). A fix inside RPCS3 would cover every MLB title that draws crowds this way, without per-game patches.
 
