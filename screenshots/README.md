@@ -9,6 +9,7 @@
 | `before_replay_fans_on_mound.png` | replay camera: giant fans on and around the mound |
 | `before_replay_no_fans.png` | replay: stretched grey fans, black bars, missing sections |
 | `before_replay_sky_fans.png` | replay: fans in the sky |
+| `before_face_holes.jpg` | resolution scaling without the face patch: pin-holes in the pitcher's face and cap (in-game screenshot) |
 | `before_crown.png` | outfield: a fan sitting on top of the crown scoreboard, empty outfield seats (in-game screenshot) |
 
 `after_*.png` were taken in game with patch v1.1 on, matching the before shots' cameras where possible.

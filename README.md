@@ -48,6 +48,14 @@ If the patch doesn't appear under the game, you're on a different version or reg
 
 The patch has only been verified on the disc version (BCUS01089). The digital version's update may have a different PPU hash. If you boot NPUA81353 and the log shows a different hash, open an issue with the hash and it can be added. Nothing in this repo contains game files.
 
+## Optional: face patch for resolution scaling
+
+![pin-holes in a pitcher's face and cap without the patch](screenshots/before_face_holes.jpg)
+
+Only needed with **Resolution Scale above 100%**. At higher resolutions, player faces, ears and caps show pin-holes: the game skips triangles too small to cover a pixel at 720p, and when scaled up those triangles do cover pixels. [`patches/MLB16_triangle_fix.yml`](patches/MLB16_triangle_fix.yml) stops the skipping. Install it the same way as above and tick **"Fix holes in player faces"**. The write-up is [docs/ice-mesh.md](https://github.com/MatRanc/mlb16-revival-server/blob/main/docs/ice-mesh.md) in the revival server repo.
+
+The master copy of this patch lives in the [revival server repo](https://github.com/MatRanc/mlb16-revival-server/blob/main/patches/MLB16_triangle_fix.yml), whose launcher installs it. The copy here keeps the RPCS3-specific fixes in one place; if the two ever differ, use the server repo's.
+
 ## RPCS3 settings for MLB 16
 
 Found while testing online play (Oct 2026, RPCS3 v0.0.43-20394/20397, Windows, Linux and an M1 Mac):
@@ -56,7 +64,7 @@ Found while testing online play (Oct 2026, RPCS3 v0.0.43-20394/20397, Windows, L
 |---|---|
 | **Write Color Buffers** on | Fixes the dark crowd sections and the black background in picture-in-picture windows (like the runner's lead-off). This is the one that matters. |
 | Strict Rendering Mode | Not needed for the above. Costs performance (an M1 Mac ran about 35 FPS in a match with it on), and blocks Resolution Scale. Keep it off. |
-| Resolution Scale above 100% | Sharper picture (needs Strict Rendering off). Side effects: thin see-through seams between some surfaces, like the outfield wall and the field (fewer at 150%), and pin-holes in player faces, which the revival server's face patch fixes (see [Related](#related)). |
+| Resolution Scale above 100% | Sharper picture (needs Strict Rendering off). Side effects: thin see-through seams between some surfaces, like the outfield wall and the field (fewer at 150%), and pin-holes in player faces, which the [face patch](#optional-face-patch-for-resolution-scaling) fixes. |
 | Default Resolution | Keep *720p*. *1440×1080* is not 1440p: it's a stretched PS3 output mode, and the game still renders at 720p. |
 | SPU Block Size *Mega* + Accurate SPU Reservations off | Two online matches froze on the player using them (Windows, i5-12600KF, also at 1440×1080 + 200% scale): one silent hang, and one RPCS3 fatal error ("vm::writer_lock is being used without cpu_flag::wait…") inside `cellSpursRemoveWorkload`. The other player ran the same settings for 42 minutes without trouble, so it's not every time. Keep the defaults (*Safe*, on). |
 
@@ -82,7 +90,6 @@ The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server)
 
 ## Related
 
-- **Pin-holes in player faces with resolution scaling** are a different bug with the same method: RenderDoc showed gaps in the head meshes, and Ghidra plus an SPU disassembly traced them to the game's ICE mesh code culling triangles too small for 720p. The fix ships with the [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server); the write-up is [docs/ice-mesh.md](https://github.com/MatRanc/mlb16-revival-server/blob/main/docs/ice-mesh.md).
 - The revival server's [better depth of field](https://github.com/MatRanc/mlb16-revival-server/blob/main/TECHNICAL.md#the-patches) patch rewrites the game's close-up blur shader.
 
 ## Fun fact
