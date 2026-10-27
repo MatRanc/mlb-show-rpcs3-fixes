@@ -6,7 +6,7 @@ On RPCS3, *MLB The Show 16* has broken crowds:
 - huge stretched fans show up as black bars across the screen
 - rows of fans float in the sky
 
-This repo has a one-line RPCS3 game patch that fixes this, and a full write-up of how the bug was found.
+This repo has a one-line RPCS3 game patch that fixes this, and a full write-up of how the bug was found. It also has an [optional face patch](#optional-face-patch-for-resolution-scaling) for resolution scaling and [RPCS3 settings](#rpcs3-settings-for-mlb-16) for MLB 16.
 
 | Before | After (patch v1.1) |
 |---|---|
@@ -62,11 +62,12 @@ Found while testing online play (Oct 2026, RPCS3 v0.0.43-20394/20397, Windows, L
 
 | Setting | What we saw |
 |---|---|
-| **Write Color Buffers** on | Fixes the dark crowd sections and the black background in picture-in-picture windows (like the runner's lead-off). This is the one that matters. |
-| Strict Rendering Mode | Not needed for the above. Costs performance (an M1 Mac ran about 35 FPS in a match with it on), and blocks Resolution Scale. Keep it off. |
-| Resolution Scale above 100% | Sharper picture (needs Strict Rendering off). Side effects: thin see-through seams between some surfaces, like the outfield wall and the field (fewer at 150%), and pin-holes in player faces, which the [face patch](#optional-face-patch-for-resolution-scaling) fixes. |
-| Default Resolution | Keep *720p*. *1440×1080* is not 1440p: it's a stretched PS3 output mode, and the game still renders at 720p. |
-| SPU Block Size *Mega* + Accurate SPU Reservations off | Two online matches froze on the player using them (Windows, i5-12600KF, also at 1440×1080 + 200% scale): one silent hang, and one RPCS3 fatal error ("vm::writer_lock is being used without cpu_flag::wait…") inside `cellSpursRemoveWorkload`. The other player ran the same settings for 42 minutes without trouble, so it's not every time. Keep the defaults (*Safe*, on). |
+| **Write Color Buffers** on | Fixes the dark crowd sections and the black background in picture-in-picture windows (like the runner's lead-off). This is the one that matters. It also matters for coaches' and created players' faces: the game builds those once and saves them to `dev_hdd0/game/BCUS01089_R/USRDIR/HeadFaceCacheFile`. Faces built while it was off are saved blank and show up white. If you see white faces after turning it on, delete (or rename) that file and the game rebuilds them. |
+| Read Color Buffers, Read Depth Buffer, Write Depth Buffer, Disable Vertex Cache | Keep off (the defaults). They fixed nothing visible and made RPCS3's RSX thread the bottleneck. Turning them off took dugout close-ups from 7–11 FPS to 30–40 (Ryzen 5 2600X, 1080p at 300%). |
+| Strict Rendering Mode | Not needed for the above. Costs performance (an M1 Mac ran about 35 FPS in a match with it on), blocks Resolution Scale and makes RPCS3 ignore the anisotropic filter. Keep it off. |
+| Resolution Scale above 100% | Sharper picture (needs Strict Rendering off). Side effects: thin see-through seams between some surfaces, like the outfield wall and the field (fewer at 150%), and pin-holes in player faces, which the [face patch](#optional-face-patch-for-resolution-scaling) fixes. 800% froze the game on an RTX 3060 Ti, likely out of video memory. |
+| Default Resolution | *720p*, or *1080p* with Resolution Scale *150%* for a sharper picture. *1440×1080* is not 1440p: it's a stretched PS3 output mode, and the game still renders at 720p. |
+| CPU, SPU and RSX accuracy settings | Keep RPCS3's defaults. Every freeze traced so far came from one changed away from its default. SPU Block Size *Mega* with Accurate SPU Reservations off froze two online matches (one silent hang, one fatal error inside `cellSpursRemoveWorkload`). RSX FIFO Accuracy *Fast* logged "FIFO error: possible desync event" every few seconds, then froze or crashed. Online, one player freezing stops both games, since they run in lockstep. |
 
 The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server) applies these for the game automatically.
 
@@ -74,6 +75,7 @@ The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server)
 
 | | |
 |---|---|
+| [patches/](patches/) | The crowd patch and the face patch. |
 | [writeup/crowd-fix.md](writeup/crowd-fix.md) | The full story: symptoms, how the bad draws were found in RenderDoc, how the game code was found in Ghidra, both RPCS3 bugs, the patch and how it was verified. Dead ends included. |
 | [docs/setup.md](docs/setup.md) | Setting up the tools: RPCS3 + RenderDoc capture, Ghidra 12.1.2 + PS3 scripts, GhidraMCP, RenderDoc MCP. |
 | [docs/workflow.md](docs/workflow.md) | The general method for chasing *any* RPCS3 graphics bug in these games, from glitch to patch. |
@@ -85,7 +87,7 @@ The [revival server's launcher](https://github.com/MatRanc/mlb16-revival-server)
 ## Status
 
 - Crowd: **fixed** with patch v1.1, first tested at Kauffman Stadium (gameplay, batting view, replays), since then at other parks and in online matches.
-- Still open: a handful of small crowd batches that may still misbehave in rare shots, and a crowd flicker seen once that a new game (new crowd layout) cleared (see the write-up), the post-game freeze, black flashes on some camera pans, and one mid-game RPCS3 crash (`rsx::surface_color_format` verification failed, seen once in an online game).
+- Still open: a handful of small crowd batches that may still misbehave in rare shots, and a crowd flicker seen once that a new game (new crowd layout) cleared (see the write-up), the post-game freeze, black flashes on some camera pans, one mid-game RPCS3 crash (`rsx::surface_color_format` verification failed, seen once in an online game), and players in the dugout flickering once on a quick camera pan (no capture yet).
 - Upstream: a proposed fix for both RPCS3 bugs is on [my RPCS3 fork](https://github.com/MatRanc/rpcs3/commits/fix-mlb-crowd-draw-clause) (not built or tested, not a PR). A fix inside RPCS3 would cover every MLB title that draws crowds this way, without per-game patches.
 
 ## Related

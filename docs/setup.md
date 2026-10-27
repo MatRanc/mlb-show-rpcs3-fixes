@@ -79,6 +79,7 @@ Useful tools: `open_capture`, `get_frame_overview`, `pixel_history`, `get_draw_c
 
 Two gotchas:
 - Don't open the same capture in the MCP server and in a script at the same time. Two replays of a 1.5 GB capture ran the GPU out of memory. Call `close_capture` first.
+- RPCS3's vertex constants buffer reports a size of 4294967280 (−16). Reading it whole crashed the MCP server and the scripts; read it with an explicit size (`GetBufferData(id, offset, length)`) instead.
 - The generic tools don't understand RPCS3's vertex pulling (see [rpcs3-internals.md](rpcs3-internals.md)). For vertex data, use [`tools/rpcs3_drawparams.py`](../tools/rpcs3_drawparams.py).
 
 ## Ghidra

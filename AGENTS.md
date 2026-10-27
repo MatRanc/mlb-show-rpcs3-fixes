@@ -51,4 +51,14 @@ Follow `docs/workflow.md`. Key rules learned the hard way:
 - A mid-game RPCS3 crash, seen once (Oct 25, 2026, online game, accuracy settings on): the RSX thread hit a fatal "Verification failed" in
   `rsx::expected<rsx::surface_color_format>` (the game set a surface color format RPCS3 doesn't know, value 0), right after a
   FIFO `call` to 0x0549fa0. The emulation froze; the log is kept locally, not in this repo.
+- Players in the dugout flickered once on a quick pan after a foul ball (maybe one white head). No capture yet.
 - Porting the crowd patch to MLB 11–15 and other regions.
+
+## Already explained (don't re-chase)
+
+- **White faces on coaches or created players:** a stale `HeadFaceCacheFile` built without Write Color Buffers. Delete it; the game rebuilds it.
+- **Brighter pre-game dugout with Write Color Buffers on:** the game measures lighting from GPU renders it reads back; with the setting off it reads stale, dark data. The bright look is most likely what a PS3 shows.
+- **A few fans behind the dugout overlapping for a frame while orbiting the replay camera:** the fans are flat pictures picked by viewing angle; likely the switch between pictures, possibly the same on a PS3.
+- **Pin-holes in faces with resolution scaling:** the game's SPU mesh code skips sub-pixel triangles; fixed by `patches/MLB16_triangle_fix.yml`.
+
+Ghidra names for the face, lighting, ICE mesh and network code are in the revival server's [docs/code-map.md](https://github.com/MatRanc/mlb16-revival-server/blob/main/docs/code-map.md).

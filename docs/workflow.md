@@ -14,8 +14,10 @@ The general loop used for the crowd fix. It should work for most RPCS3 graphics 
 - Find a spot where the glitch shows reliably: a stadium, a camera, a replay.
 - Write down what changes it. Does camera movement change it? Time? Which settings?
 - Try RPCS3's accuracy settings once (Write Color/Depth Buffers, Strict Rendering, shader precision, etc.).
-  - If one of them fixes it, you're done: it's a config, not a patch.
+  - If one of them fixes it, you're done: it's a config, not a patch. Then turn the others back off one at a time: in MLB 16 only Write Color Buffers mattered, and the other buffer options plus Disable Vertex Cache cut dugout close-ups from 30–40 FPS to 7–11.
   - If nothing changes it, it's logic, so keep going.
+  - Check the settings really applied: RPCS3's settings window can re-save the game's custom config over your edit. `RPCS3.log` prints the full config at boot.
+  - A fix may not show right away if the game saved the broken result to disk. MLB 16 renders generated faces on the GPU once and caches them in `HeadFaceCacheFile`; faces built without Write Color Buffers stay white until that file is deleted.
 
 ## 2. Capture
 

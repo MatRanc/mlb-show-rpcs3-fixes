@@ -68,3 +68,4 @@ So anything that reorders ranges, or treats the whole clause uniformly, can brea
 | wrong textures / stale images | texture cache (`rpcs3/Emu/RSX/Common/texture_cache*.h`), "Strict Texture Flushing" |
 | missing or flickering objects | ZCull / occlusion queries (`RSXZCULL.cpp`), conditional render |
 | black frames / flashes | surface (render target) cache, `Write Color Buffers` |
+| wrong lighting or exposure, blank generated textures | the game reading GPU renders back on the CPU. Without `Write Color Buffers` RPCS3 never writes them to memory, so the game reads stale data. Results the game saves to disk stay wrong after the fix (MLB 16's `HeadFaceCacheFile`) |
