@@ -100,4 +100,4 @@ The whole investigation was done with Claude Code driving Ghidra and RenderDoc t
 
 ## License
 
-Apache License 2.0 for the scripts and docs (see [LICENSE](LICENSE)). MLB The Show is © Sony Interactive Entertainment. This repo contains no game code or assets beyond short, explanatory excerpts.
+GNU General Public License v2.0 for the scripts and docs (see [LICENSE](LICENSE)). MLB The Show is © Sony Interactive Entertainment. This repo contains no game code or assets beyond short, explanatory excerpts.
